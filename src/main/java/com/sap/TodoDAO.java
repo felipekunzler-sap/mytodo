@@ -25,22 +25,20 @@ public class TodoDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		System.out.println(t);
 		session.persist(t);
-		logger.info("Todo saved successfully, Todo Details=" + t);
+		logger.info("Todo saved successfully: " + t);
 	}
 
 	public void updateTodo(Todo t) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(t);
-		logger.info("Todo updated successfully, Todo Details=" + t);
+		logger.info("Todo updated successfully: " + t);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Todo> getTodoList() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Todo> todoList = session.createQuery("from Todo").list();
-		for (Todo t : todoList) {
-			logger.info("Todo List::" + t);
-		}
+		logger.info("Todo List loaded.");
 
 		return todoList;
 	}
@@ -48,7 +46,7 @@ public class TodoDAO {
 	public Todo getTodoById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Todo t = (Todo) session.load(Todo.class, new Integer(id));
-		logger.info("Todo loaded successfully, Todo details=" + t);
+		logger.info("Todo loaded successfully: " + t);
 
 		return t;
 	}
@@ -60,6 +58,6 @@ public class TodoDAO {
 			session.delete(t);
 		}
 		
-		logger.info("Todo deleted successfully, Todo details=" + t);
+		logger.info("Todo deleted successfully: " + t);
 	}
 }

@@ -33,6 +33,21 @@ table td {
 			<tr>
 				<td>${todo.description}</td>
 				<td>${todo.done}</td>
+				<td>
+					<form action="editTodo" method="post">
+						<input type="hidden" name="description" value="${todo.description}" />
+						<input type="hidden" name="id" value="${todo.id}" />
+						<input type="hidden" name="done" value="${todo.done}" />
+						<input type="hidden" name="createForm" value="true" />
+						<input type="submit" value="Edit" />
+					</form>
+				</td>
+				<td>
+					<form action="" method="post">
+						<input type="hidden" name="todoId" value="${todo.id}" />
+						<input type="submit" value="X" />
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

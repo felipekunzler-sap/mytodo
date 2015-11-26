@@ -1,13 +1,13 @@
 package com.sap;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +18,7 @@ public class TodoController {
 	@Autowired
 	private TodoDAO todoDAO;
 	
-	@RequestMapping("/")
+	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public ModelAndView showHome() {
 		
 		ModelAndView mv = new ModelAndView("home");
@@ -27,14 +27,25 @@ public class TodoController {
 		return mv;
 	}
 	
-	@RequestMapping("/addTodo")
-	public String showAddTodo(HttpSession session) {
+	@RequestMapping(value = "/", method=RequestMethod.POST)
+	public String removeTodo(int todoId, Model model) {
+		
+		this.todoDAO.removeTodo(todoId);
+		model.addAttribute("todoList", this.todoDAO.getTodoList());
+		
+		return "home";
+	}
+	
+	@RequestMapping(value = "/addTodo", method=RequestMethod.GET)
+	public String formAddTodo(Model model) {
+		
+		model.addAttribute("todo", new Todo());				
 		
 		return "addTodo";
 	}
 	
-	@RequestMapping(value = "/checkTodo", method=RequestMethod.POST )
-	public String checkTodo(@Valid Todo todo, BindingResult bindingResult) {
+	@RequestMapping(value = "/addTodo", method=RequestMethod.POST )
+	public String addTodo(@ModelAttribute("todo") @Valid Todo todo, BindingResult bindingResult) {
 				
 		if (bindingResult.hasErrors()){
 			return "addTodo";
@@ -44,4 +55,16 @@ public class TodoController {
 		
 		return "redirect:";
 	}
+	
+	@RequestMapping(value = "/editTodo", method=RequestMethod.POST )
+	public String editTodo(boolean createForm, @Valid @ModelAttribute("todo") Todo todo, BindingResult bindingResult) {
+		
+		if (createForm || bindingResult.hasErrors()){
+			return "editTodo";
+		}
+			
+		this.todoDAO.updateTodo(todo);
+		
+		return "redirect:";
+	}	
 }

@@ -6,19 +6,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add new Todo</title>
+<title>Edit Todo</title>
 </head>
 <body>
-<h1>Add new Todo:</h1> <p/>
+<h1>Edit Todo:</h1> <p/>
 
-<form:form action="addTodo" method="post" modelAttribute="todo">
+<form:form action="editTodo" method="post" modelAttribute="todo">
 
-	<p>Description: <form:input type="text" name="description" value="" path="description" /><br/>
+	<p>Description: <form:input type="text" name="description" path="description" /><br/>
 	<font color="red" size="2"><form:errors path ="description"/></font></p>
-	
+	<form:input type="hidden" name="id" path="id" />
 	Done: <form:checkbox name="done" path="done"/><br/><br/>
-	<input type="hidden" name="createForm" value="false" />
-	<input type="submit" value="Add new Todo"/>
+    <input type="hidden" name="createForm" value="false" />
+	<input type="submit" value="Save Todo"/>
 	
 </form:form>
 
