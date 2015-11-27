@@ -9,18 +9,16 @@
 <title>Add new Todo</title>
 </head>
 <body>
-<h1>Add new Todo:</h1> <p/>
-
-<form:form action="addTodo" method="post" modelAttribute="todo">
-
-	<p>Description: <form:input type="text" name="description" value="" path="description" /><br/>
-	<font color="red" size="2"><form:errors path ="description"/></font></p>
+	<h1>Add new Todo:</h1>
+	<form:form action="addTodo" method="post" modelAttribute="todo">
 	
-	Done: <form:checkbox name="done" path="done"/><br/><br/>
-	<input type="hidden" name="createForm" value="false" />
-	<input type="submit" value="Add new Todo"/>
-	
-</form:form>
-
+		<p>Description: <form:input type="text" name="description" value="" path="description" /><br/>
+		<font color="red" size="2"><form:errors path ="description"/></font></p>
+		
+		Done: <form:checkbox name="done" path="done"/><br/><br/>
+		<input type="hidden" name="createForm" value="false" />
+		<input type="submit" value="Add new Todo"/>
+		
+	</form:form>
 </body>
 </html>

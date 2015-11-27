@@ -1,6 +1,6 @@
 package com.sap;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TodoController {
@@ -19,12 +18,17 @@ public class TodoController {
 	private TodoDAO todoDAO;
 	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
-	public ModelAndView showHome() {
+	public String showHome(Model model, HttpSession session) {
 		
-		ModelAndView mv = new ModelAndView("home");
-		mv.addObject("todoList", this.todoDAO.getTodoList());
+		String currentUser = (String) session.getAttribute("currentUser");
+		System.out.println(currentUser);
+		if (currentUser == null){
+			return "redirect:login";
+		}
+				
+		model.addAttribute("todoList", this.todoDAO.getTodoList());
 		
-		return mv;
+		return "home";
 	}
 	
 	@RequestMapping(value = "/", method=RequestMethod.POST)

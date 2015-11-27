@@ -28,6 +28,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.sap.Todo</value>
+				<value>com.sap.User</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -49,6 +50,17 @@
 		<constructor-arg>
 			<ref bean="sessionFactory" />
 		</constructor-arg>
+	</bean>
+	
+	<bean id="userDAO" class="com.sap.UserDAO">
+		<constructor-arg>
+			<ref bean="sessionFactory" />
+		</constructor-arg>
+	</bean>
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages/messages" />	
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
