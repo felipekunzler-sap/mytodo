@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="com.sap.Todo"%>
+<%@ page import="com.sap.*"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -24,7 +24,7 @@
 	  	</div>
 	  	</br>
 	  	<div class="form-group" align="right">
-	  		Hi <%=request.getSession().getAttribute("currentUser")%>! &nbsp;
+	  		Hi <%=  ((User) request.getSession().getAttribute("currentUser")).getUsername() %>! &nbsp;
 	  		<a href="logout" >Logout</a>
 	  	</div>
 		<table class="table">
@@ -41,6 +41,7 @@
 							<input type="hidden" name="description" value="${todo.description}" />
 							<input type="hidden" name="id" value="${todo.id}" />
 							<input type="hidden" name="done" value="${todo.done}" />
+							<input type="hidden" name="userId" value="${todo.userId}" />
 							<input type="hidden" name="createForm" value="true" />
 							<input class="btn btn-default btn-xs" type="submit" value="Edit" />
 						</form>

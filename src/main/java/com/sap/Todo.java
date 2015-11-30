@@ -11,19 +11,30 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "Todo")
+@Table(name = "todo")
 public class Todo {
 	
 	@Id
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name="id_user")
+	private int userId;
 
 	@NotEmpty(message="{form.todo.description.empty}")
 	@Size(min=2, max=50)
 	private String description;
 	
 	private boolean done;
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public String getDescription() {
 		return description;
@@ -51,6 +62,6 @@ public class Todo {
 
 	@Override
 	public String toString() {
-		return "Todo [id=" + id + ", description=" + description + ", done=" + done + "]";
+		return "Todo [id=" + id + ", userId=" + userId + ", description=" + description + ", done=" + done + "]";
 	}
 }

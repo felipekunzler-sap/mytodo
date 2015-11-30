@@ -1,5 +1,8 @@
-package com.sap;
+package com.sap.controllers;
 
+import com.sap.*;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,7 +23,7 @@ public class LoginController {
 	@RequestMapping(value = "/login", method=RequestMethod.GET )
 	public String formLogin(Model model, HttpSession session) {
 				
-		String currentUser = (String) session.getAttribute("currentUser");
+		User currentUser = (User) session.getAttribute("currentUser");
 		if (currentUser != null){
 			return "redirect:";
 		}
@@ -31,10 +34,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/logout", method=RequestMethod.GET )
-	public String formLogin(HttpSession session) {
+	public String formLogin(HttpSession session, HttpServletResponse response) {
+        		
 		
 		session.removeAttribute("currentUser");
-				
+		session.invalidate();
+		
 		return "redirect:";
 	}
 	
@@ -42,17 +47,17 @@ public class LoginController {
 	public String login(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, HttpSession session, Model model) {
 						
 		if (bindingResult.hasErrors()){
-			System.out.println("has erros");
 			return "login";
 		}
 		
 		if (this.userDAO.checkCredentials(user)){
 			
-			session.setAttribute("currentUser", user.getUsername());
+			int userId = this.userDAO.getUserByName(user.getUsername()).getId();
+			user.setId(userId);
+			session.setAttribute("currentUser", user);
 			return "redirect:";
 		}
 		
-		System.out.println("not found");
 		model.addAttribute("notFound", "Credentials were not found in the server.");
 		return "login";		
 	}
@@ -74,8 +79,9 @@ public class LoginController {
 		}
 		
 		this.userDAO.addUser(user);
-			
-		session.setAttribute("currentUser", user.getUsername());
+		int userId = this.userDAO.getUserByName(user.getUsername()).getId();
+		user.setId(userId);
+		session.setAttribute("currentUser", user);
 		return "redirect:";	
 	}
 }

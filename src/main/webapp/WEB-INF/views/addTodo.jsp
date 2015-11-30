@@ -6,19 +6,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add new Todo</title>
+<title>New Todo</title>
+<style type="text/css">
+
+    <%@include file="../css/bootstrap.min.css" %>
+    <%@include file="../css/bootstrap.css" %>
+</style>
 </head>
 <body>
-	<h1>Add new Todo:</h1>
-	<form:form action="addTodo" method="post" modelAttribute="todo">
+	<div class="container" style="width: 450px">
+	  	<br/>
+	  	<div class="jumbotron">
+			<h1 align="center">New Todo</h1>
+	  	</div>
+	  	<br/>
+		<form:form action="addTodo" method="post" modelAttribute="todo">
 	
-		<p>Description: <form:input type="text" name="description" value="" path="description" /><br/>
-		<font color="red" size="2"><form:errors path ="description"/></font></p>
-		
-		Done: <form:checkbox name="done" path="done"/><br/><br/>
-		<input type="hidden" name="createForm" value="false" />
-		<input type="submit" value="Add new Todo"/>
-		
-	</form:form>
+			<div class="form-group">
+				<label for="description">Description:</label>
+				<form:input class="form-control" type="text" name="description" path="description" />
+				<font color="red" size="2"><form:errors path ="description"/></font>
+			</div>
+			
+			<div class="form-group">
+				<label for="description" style="display:inline-block; vertical-align: middle;">Done:</label>
+				<form:checkbox class="form-control" name="done" path="done" style=" width:34px;" />
+			</div>
+			
+			<input type="hidden" name="createForm" value="false" />
+			<input class="btn btn-success btn-block btn-md" type="submit" value="Insert" />
+		</form:form>
+	</div>
 </body>
 </html>

@@ -1,4 +1,7 @@
-package com.sap;
+package com.sap.controllers;
+
+
+import com.sap.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,16 +20,14 @@ public class TodoController {
 	@Autowired
 	private TodoDAO todoDAO;
 	
+	@Autowired 
+	UserDAO userDAO;
+	
 	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public String showHome(Model model, HttpSession session) {
 		
-		String currentUser = (String) session.getAttribute("currentUser");
-		System.out.println(currentUser);
-		if (currentUser == null){
-			return "redirect:login";
-		}
-				
-		model.addAttribute("todoList", this.todoDAO.getTodoList());
+		User currentUser = (User) session.getAttribute("currentUser");		
+		model.addAttribute("todoList", this.todoDAO.getTodoListByUser(currentUser.getId()));
 		
 		return "home";
 	}
@@ -35,9 +36,8 @@ public class TodoController {
 	public String removeTodo(int todoId, Model model) {
 		
 		this.todoDAO.removeTodo(todoId);
-		model.addAttribute("todoList", this.todoDAO.getTodoList());
 		
-		return "home";
+		return "redirect:";
 	}
 	
 	@RequestMapping(value = "/addTodo", method=RequestMethod.GET)
@@ -49,24 +49,35 @@ public class TodoController {
 	}
 	
 	@RequestMapping(value = "/addTodo", method=RequestMethod.POST )
-	public String addTodo(@ModelAttribute("todo") @Valid Todo todo, BindingResult bindingResult) {
+	public String addTodo(@ModelAttribute("todo") @Valid Todo todo, BindingResult bindingResult, HttpSession session) {
 				
 		if (bindingResult.hasErrors()){
 			return "addTodo";
 		}
 
+		User currentUser = (User) session.getAttribute("currentUser");
+		todo.setUserId(currentUser.getId());
 		this.todoDAO.addTodo(todo);
 		
 		return "redirect:";
 	}
 	
+	@RequestMapping(value = "/editTodo", method=RequestMethod.GET)
+	public String handleEditTodoGet() {
+		
+		return "redirect:";
+	}
+	
 	@RequestMapping(value = "/editTodo", method=RequestMethod.POST )
-	public String editTodo(boolean createForm, @Valid @ModelAttribute("todo") Todo todo, BindingResult bindingResult) {
+	public String editTodo(boolean createForm, @Valid @ModelAttribute("todo") Todo todo, 
+			BindingResult bindingResult, HttpSession session) {
+		
+		System.out.println(todo);
 		
 		if (createForm || bindingResult.hasErrors()){
 			return "editTodo";
 		}
-			
+		
 		this.todoDAO.updateTodo(todo);
 		
 		return "redirect:";

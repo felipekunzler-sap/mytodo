@@ -7,20 +7,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Todo</title>
+<style type="text/css">
+
+    <%@include file="../css/bootstrap.min.css" %>
+    <%@include file="../css/bootstrap.css" %>
+</style>
 </head>
 <body>
-<h1>Edit Todo:</h1> <p/>
-
-<form:form action="editTodo" method="post" modelAttribute="todo">
-
-	<p>Description: <form:input type="text" name="description" path="description" /><br/>
-	<font color="red" size="2"><form:errors path ="description"/></font></p>
-	<form:input type="hidden" name="id" path="id" />
-	Done: <form:checkbox name="done" path="done"/><br/><br/>
-    <input type="hidden" name="createForm" value="false" />
-	<input type="submit" value="Save Todo"/>
-	
-</form:form>
-
+	<div class="container" style="width: 450px">
+	  	<br/>
+	  	<div class="jumbotron">
+			<h1 align="center">Edit Todo</h1>
+	  	</div>
+	  	<br/>
+			<form:form action="editTodo" method="post" modelAttribute="todo">
+				<div class="form-group">
+					<label for="description">Description:</label>
+					<form:input class="form-control" type="text" name="description" path="description" />
+					<font color="red" size="2"><form:errors path ="description"/></font>
+				</div>
+				<div class="form-group">
+					<label for="description" style="display:inline-block; vertical-align: middle;">Done:</label>
+					<form:checkbox class="form-control" name="done" path="done" style=" width:34px;" />
+				</div>
+				<form:input type="hidden" name="id" path="id" />
+				<form:input type="hidden" name="userId" path="userId" />
+				<input type="hidden" name="createForm" value="false" />
+				<input class="btn btn-success btn-block btn-md" type="submit" value="Save" />
+			</form:form>
+		</div>
 </body>
 </html>
