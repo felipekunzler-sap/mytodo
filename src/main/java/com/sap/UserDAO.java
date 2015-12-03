@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sap.exceptions.UserAlreadyExistsException;
+
 @Repository
 @Transactional
 public class UserDAO {
@@ -18,9 +20,13 @@ public class UserDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public void addUser(User u) {
+	public void addUser(User u) throws UserAlreadyExistsException {
 		Session session = this.sessionFactory.getCurrentSession();
-		System.out.println(u);
+		boolean userAlreadyExist = session.get(User.class, u.getUsername()) != null;
+		if (userAlreadyExist){
+			throw new UserAlreadyExistsException();
+		}
+		
 		session.persist(u);
 		logger.info("User saved successfully: " + u);
 	}

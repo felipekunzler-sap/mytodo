@@ -1,7 +1,5 @@
 package com.sap.controllers;
 
-import com.sap.*;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -10,9 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.sap.User;
+import com.sap.UserDAO;
+import com.sap.UserValidator;
+import com.sap.exceptions.UserAlreadyExistsException;
 
 @Controller
 public class LoginController {
@@ -71,7 +75,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/signUp", method=RequestMethod.POST )
-	public String signUp(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, HttpSession session) {
+	public String signUp(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, HttpSession session) throws UserAlreadyExistsException {
 						
 		new UserValidator().validate(user, bindingResult);
 		if (bindingResult.hasErrors()){
@@ -83,5 +87,10 @@ public class LoginController {
 		user.setId(userId);
 		session.setAttribute("currentUser", user);
 		return "redirect:";	
+	}
+	
+	@ExceptionHandler(UserAlreadyExistsException.class)
+	public String handleDuplicateUser() {
+		return "errors/userAlreadyExists";
 	}
 }

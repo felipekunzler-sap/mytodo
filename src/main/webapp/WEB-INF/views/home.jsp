@@ -17,12 +17,12 @@
 </style>
 </head>
 <body>
-	</br>
+	<br>
 	<div class="container" style="width: 500px">
 	  	<div class="jumbotron">
 			<h1 align="center"><spring:message code="myTodo"/></h1>
 	  	</div>
-	  	</br>
+	  	<br>
 	  	<div class="form-group" align="right">
 	  		Hi <%=  ((User) request.getSession().getAttribute("currentUser")).getUsername() %>! &nbsp;
 	  		<a href="logout" >Logout</a>

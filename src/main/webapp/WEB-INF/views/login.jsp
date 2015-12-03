@@ -36,7 +36,7 @@
 			<input class="btn btn-success btn-block btn-md" type="submit" value="Login" />
 		</form:form>
 		<font color="red" size="2">${notFound}</font>
-		</br>
+		<br>
 		<div class="form-group" align="right">
 			<a href="signUp">Sign Up</a>
 		</div>

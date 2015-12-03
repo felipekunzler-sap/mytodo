@@ -1,8 +1,6 @@
 package com.sap.controllers;
 
 
-import com.sap.*;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,6 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.sap.Todo;
+import com.sap.TodoDAO;
+import com.sap.User;
+import com.sap.UserDAO;
 
 @Controller
 public class TodoController {
@@ -81,5 +84,5 @@ public class TodoController {
 		this.todoDAO.updateTodo(todo);
 		
 		return "redirect:";
-	}	
+	}
 }
