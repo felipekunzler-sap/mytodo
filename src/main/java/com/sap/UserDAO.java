@@ -3,6 +3,7 @@ package com.sap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +15,9 @@ public class UserDAO {
 
 	private static final Logger logger = Logger.getLogger(UserDAO.class);
 
+	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public UserDAO(SessionFactory sessionFactory){
-		this.sessionFactory = sessionFactory;
-	}
-
 	public void addUser(User u) throws UserAlreadyExistsException {
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean userAlreadyExist = session.get(User.class, u.getUsername()) != null;
@@ -37,6 +35,10 @@ public class UserDAO {
 		logger.info("User loaded successfully: " + u);
 
 		return u;
+	}
+	
+	public int getUserIdByName(String name){
+		return this.getUserByName(name).getId();
 	}
 	
 	public boolean checkCredentials(User user) {

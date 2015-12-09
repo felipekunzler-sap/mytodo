@@ -4,6 +4,7 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,13 +19,14 @@
 </head>
 <body>
 	<br>
+	<sec:authentication var="principal" property="principal" />
 	<div class="container" style="width: 500px">
 	  	<div class="jumbotron">
 			<h1 align="center"><spring:message code="myTodo"/></h1>
 	  	</div>
 	  	<br>
 	  	<div class="form-group" align="right">
-	  		Hi <%=  ((User) request.getSession().getAttribute("currentUser")).getUsername() %>! &nbsp;
+	  		Hi ${principal.username}! &nbsp;
 	  		<a href="logout" >Logout</a>
 	  	</div>
 		<table class="table">

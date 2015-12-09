@@ -22,20 +22,21 @@
 			<h1 align="center">Login</h1>
 	  	</div>
 	  	<br/>
-		<form:form action="login" method="post" modelAttribute="user">
+		<form action="login" method="POST">
 			<div class="form-group">
 				<label for="username">Username:</label>
-				<form:input class="form-control" type="text" name="username" path="username" />
-				<font color="red" size="2"><form:errors path ="username"/></font>
+				<input class="form-control" type="text" name="username" />
 			</div>
 			<div class="form-group">
 				<label for="password">Password:</label>
-				<form:input class="form-control" type="password" name="password" path="password"/>
-				<font color="red" size="2"><form:errors path ="password"/></font>
+				<input class="form-control" type="password" name="password"/>
 			</div>
 			<input class="btn btn-success btn-block btn-md" type="submit" value="Login" />
-		</form:form>
-		<font color="red" size="2">${notFound}</font>
+		</form>
+		<c:if test="${param.error != null}">
+			<font color="red" size="2">Login failed. Check your username and
+				password.</font>
+		</c:if>
 		<br>
 		<div class="form-group" align="right">
 			<a href="signUp">Sign Up</a>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 //import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class TodoDAO {
 
 	private static final Logger logger = Logger.getLogger(TodoDAO.class);
-
-	private SessionFactory sessionFactory;
 	
-	public TodoDAO(SessionFactory sessionFactory){
-		this.sessionFactory = sessionFactory;
-	}
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	public void addTodo(Todo t) {
 		Session session = this.sessionFactory.getCurrentSession();
