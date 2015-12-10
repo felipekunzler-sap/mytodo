@@ -1,5 +1,7 @@
 package com.sap.dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,6 +41,13 @@ public class UserDAO {
 		User u = (User) this.sessionFactory.getCurrentSession().load(User.class, name);
 		logger.info("User loaded successfully: " + u);
 		return u;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<User> getUserList() {
+		List<User> userList = this.sessionFactory.getCurrentSession().createCriteria(User.class).list();
+		logger.info("User List loaded.");
+		return userList;
 	}
 
 	public int getUserIdByName(String name) {

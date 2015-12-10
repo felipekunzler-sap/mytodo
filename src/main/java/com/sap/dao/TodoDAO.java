@@ -40,7 +40,7 @@ public class TodoDAO {
 	}
 
 	public Todo getTodoById(int id) {
-		Todo t = (Todo) this.sessionFactory.getCurrentSession().load(Todo.class, new Integer(id));
+		Todo t = (Todo) this.sessionFactory.getCurrentSession().get(Todo.class, new Integer(id));
 		logger.info("Todo loaded successfully: " + t);
 		return t;
 	}
