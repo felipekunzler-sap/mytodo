@@ -19,45 +19,38 @@ public class UserDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	public void addUser(User u) throws UserAlreadyExistsException {
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean userAlreadyExist = session.get(User.class, u.getUsername()) != null;
-		if (userAlreadyExist){
+		if (userAlreadyExist) {
 			throw new UserAlreadyExistsException();
 		}
-		
+
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		session.persist(u);
 		logger.info("User saved successfully: " + u);
 	}
 
 	public User getUserByName(String name) {
-		Session session = this.sessionFactory.getCurrentSession();
-		User u = (User) session.load(User.class, name);
+		User u = (User) this.sessionFactory.getCurrentSession().load(User.class, name);
 		logger.info("User loaded successfully: " + u);
-
 		return u;
 	}
-	
-	public int getUserIdByName(String name){
+
+	public int getUserIdByName(String name) {
 		return this.getUserByName(name).getId();
 	}
-	
-	public boolean checkCredentials(User user) {
-		
-		Session session = this.sessionFactory.getCurrentSession();
 
-		User u = (User) session.get(User.class, user.getUsername());
-		if (u != null && u.getPassword().equals(user.getPassword())){
+	public boolean checkCredentials(User user) {
+		User u = (User) this.sessionFactory.getCurrentSession().get(User.class, user.getUsername());
+		if (u != null && u.getPassword().equals(user.getPassword())) {
 			return true;
 		}
-		
 		logger.info("User loaded successfully: " + u);
-
 		return false;
 	}
 }

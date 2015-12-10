@@ -17,7 +17,8 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.sap.controllers" />
-
+	<security:global-method-security secured-annotations="enabled" />
+	
 	<!-- <mvc:interceptors> -->
 	<!-- <mvc:interceptor> -->
 	<!-- <mvc:mapping path="/addTodo"/> -->
