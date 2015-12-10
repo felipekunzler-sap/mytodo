@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sap.Todo;
-import com.sap.TodoDAO;
-import com.sap.UserDAO;
+import com.sap.dao.TodoDAO;
+import com.sap.dao.UserDAO;
+import com.sap.models.Todo;
 
 @Controller
 public class TodoController {
@@ -41,7 +41,7 @@ public class TodoController {
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String removeTodo(int todoId, Model model) {
-		
+
 		this.todoDAO.removeTodo(todoId);
 		return "redirect:";
 	}
@@ -67,7 +67,7 @@ public class TodoController {
 
 	@RequestMapping(value = "/editTodo", method = RequestMethod.GET)
 	public String handleEditTodoGet() {
-			
+
 		return "redirect:";
 	}
 
@@ -81,7 +81,6 @@ public class TodoController {
 
 		todo.setUserId(getLoggedUserId());
 		this.todoDAO.updateTodo(todo);
-
 		return "redirect:";
 	}
 }

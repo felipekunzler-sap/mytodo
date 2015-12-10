@@ -1,4 +1,4 @@
-package com.sap;
+package com.sap.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,25 +10,27 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.sap.validation.groups.PasswordCheck;
+
 @Entity
 @Table(name = "user")
 public class User {
-	
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@NotEmpty
-	@Size(min=4, max=20)
+	@Size(min = 4, max = 20)
 	@Id
 	private String username;
-	
+
 	@NotEmpty
-	@Size(min=4, max=20)
+	@Size(min = 4, max = 15, groups = PasswordCheck.class)
 	private String password;
-	
+
 	@Transient
 	private String confirmPassword;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -64,5 +66,5 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + "]";
-	}	
+	}
 }

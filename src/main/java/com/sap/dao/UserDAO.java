@@ -1,13 +1,15 @@
-package com.sap;
+package com.sap.dao;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sap.exceptions.UserAlreadyExistsException;
+import com.sap.models.User;
 
 @Repository
 @Transactional
@@ -18,6 +20,9 @@ public class UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	public void addUser(User u) throws UserAlreadyExistsException {
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean userAlreadyExist = session.get(User.class, u.getUsername()) != null;
@@ -25,6 +30,7 @@ public class UserDAO {
 			throw new UserAlreadyExistsException();
 		}
 		
+		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		session.persist(u);
 		logger.info("User saved successfully: " + u);
 	}

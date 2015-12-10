@@ -1,4 +1,4 @@
-package com.sap;
+package com.sap.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,21 +13,21 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "todo")
 public class Todo {
-	
+
 	@Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="id_user")
+
+	@Column(name = "id_user")
 	private int userId;
 
-	@NotEmpty(message="{form.todo.description.empty}")
-	@Size(min=2, max=50)
+	@NotEmpty(message = "{form.todo.description.empty}")
+	@Size(min = 2, max = 50)
 	private String description;
-	
+
 	private boolean done;
-	
+
 	public int getUserId() {
 		return userId;
 	}
@@ -43,7 +43,7 @@ public class Todo {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

@@ -16,7 +16,7 @@
 	</bean>
 
 	<mvc:annotation-driven />
-	<context:component-scan base-package="com.sap.controllers.**" />
+	<context:component-scan base-package="com.sap.controllers" />
 
 	<!-- <mvc:interceptors> -->
 	<!-- <mvc:interceptor> -->
@@ -28,5 +28,4 @@
 	<!-- <bean class="com.sap.interceptors.LoginInterceptor" /> -->
 	<!-- </mvc:interceptor> -->
 	<!-- </mvc:interceptors> -->
-
 </beans>

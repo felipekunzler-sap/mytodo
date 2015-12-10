@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Sign Up</title>
 <style type="text/css">
-
     <%@include file="../css/bootstrap.min.css" %>
     <%@include file="../css/bootstrap.css" %>
 </style>

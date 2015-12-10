@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Error</title>
 <style type="text/css">
-
     <%@include file="../../css/bootstrap.min.css" %>
     <%@include file="../../css/bootstrap.css" %>
 </style>

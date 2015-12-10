@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>New Todo</title>
 <style type="text/css">
-
     <%@include file="../css/bootstrap.min.css" %>
     <%@include file="../css/bootstrap.css" %>
 </style>
@@ -21,7 +20,6 @@
 	  	</div>
 	  	<br/>
 		<form:form action="addTodo" method="post" modelAttribute="todo">
-	
 			<div class="form-group">
 				<label for="description">Description:</label>
 				<form:input class="form-control" type="text" name="description" path="description" />
