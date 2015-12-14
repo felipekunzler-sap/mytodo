@@ -1,5 +1,7 @@
 package com.sap.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,18 +12,21 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sap.validation.groups.PasswordCheck;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@NotEmpty
 	@Size(min = 4, max = 20)
-	@Id
 	private String username;
 
 	@NotEmpty
@@ -29,6 +34,7 @@ public class User {
 	private String password;
 
 	@Transient
+	@JsonIgnore
 	private String confirmPassword;
 
 	public int getId() {

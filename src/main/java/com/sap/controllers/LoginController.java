@@ -60,8 +60,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/signUp", method = RequestMethod.POST)
 	public String signUp(@ModelAttribute("user") @Validated({ Default.class, PasswordCheck.class }) User user,
-			BindingResult bindingResult, HttpSession session, HttpServletRequest request)
-					throws UserAlreadyExistsException {
+			BindingResult bindingResult, HttpSession session, HttpServletRequest request) {
 
 		new UserValidator().validate(user, bindingResult);
 		if (bindingResult.hasErrors()) {

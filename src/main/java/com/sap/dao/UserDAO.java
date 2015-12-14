@@ -3,7 +3,6 @@ package com.sap.dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,19 +25,24 @@ public class UserDAO {
 	private PasswordEncoder passwordEncoder;
 
 	public void addUser(User u) throws UserAlreadyExistsException {
-		Session session = this.sessionFactory.getCurrentSession();
-		boolean userAlreadyExist = session.get(User.class, u.getUsername()) != null;
+		boolean userAlreadyExist = this.getUserByName(u.getUsername()) != null;
 		if (userAlreadyExist) {
 			throw new UserAlreadyExistsException();
 		}
 
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
-		session.persist(u);
+		 this.sessionFactory.getCurrentSession().persist(u);
 		logger.info("User saved successfully: " + u);
 	}
 
-	public User getUserByName(String name) {
-		User u = (User) this.sessionFactory.getCurrentSession().load(User.class, name);
+	public User getUserByName(String username) {
+		User u = (User) this.sessionFactory.getCurrentSession().createQuery("from User where username = '" + username + "'").uniqueResult();
+		logger.info("User loaded successfully: " + u);
+		return u;
+	}
+	
+	public User getUserById(int id) {
+		User u = (User) this.sessionFactory.getCurrentSession().get(User.class, new Integer(id));
 		logger.info("User loaded successfully: " + u);
 		return u;
 	}
@@ -55,7 +59,7 @@ public class UserDAO {
 	}
 
 	public boolean checkCredentials(User user) {
-		User u = (User) this.sessionFactory.getCurrentSession().get(User.class, user.getUsername());
+		User u = (User) this.sessionFactory.getCurrentSession().get(User.class, user.getId());
 		if (u != null && u.getPassword().equals(user.getPassword())) {
 			return true;
 		}

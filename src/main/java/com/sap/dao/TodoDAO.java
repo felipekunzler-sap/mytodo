@@ -35,7 +35,13 @@ public class TodoDAO {
 	public List<Todo> getTodoListByUser(int userId) {
 		List<Todo> todoList = this.sessionFactory.getCurrentSession().createQuery("from Todo where id_user = " + userId).list();
 		logger.info("Todo List loaded.");
-
+		return todoList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Todo> getTodoList() {
+		List<Todo> todoList = this.sessionFactory.getCurrentSession().createCriteria(Todo.class).list();
+		logger.info("Todo List loaded.");
 		return todoList;
 	}
 
