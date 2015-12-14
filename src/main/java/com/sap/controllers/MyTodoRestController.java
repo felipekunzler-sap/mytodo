@@ -42,7 +42,7 @@ public class MyTodoRestController {
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
 	public User listUser(@PathVariable("id") int id) {
 
 		User user = this.userDAO.getUserById(id);
